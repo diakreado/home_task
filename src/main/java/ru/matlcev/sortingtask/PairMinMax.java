@@ -3,13 +3,21 @@ package ru.matlcev.sortingtask;
 public class PairMinMax implements Comparable<PairMinMax> {
 
     private int maximumValue;
+    private int indexOfMaximum;
+
     private int minimumValue;
+    private int indexOfMinimum;
+
     private int delta;
 
-    PairMinMax(int minimumValue, int maximumValue) {
+    PairMinMax(int minimumValue, int indexOfMinimum, int maximumValue, int indexOfMaximum) {
 
         this.minimumValue = minimumValue;
+        this.indexOfMinimum = indexOfMinimum;
+
         this.maximumValue = maximumValue;
+        this.indexOfMaximum =indexOfMaximum;
+
         delta = maximumValue - minimumValue;
     }
 
@@ -19,6 +27,18 @@ public class PairMinMax implements Comparable<PairMinMax> {
 
     public int getMinimumValue() {
         return minimumValue;
+    }
+
+    public int getDelta() {
+        return delta;
+    }
+
+    public int getIndexOfMaximum() {
+        return indexOfMaximum;
+    }
+
+    public int getIndexOfMinimum() {
+        return indexOfMinimum;
     }
 
     @Override

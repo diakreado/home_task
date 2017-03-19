@@ -1,14 +1,19 @@
 package ru.matlcev.sortingtask;
 
-public class MainClass {
+public class MaxSubArrayFinder {
 
-    public static PairMinMax findMaxSubArray(int[] inputArray) {
-
+    public static PairMinMax findMaxSubArray(int[] inputArray) throws Exception {
 
         int middle = (inputArray.length - 1)/2;
 
-        return findMaxPair(inputArray,0, middle, inputArray.length - 1);
+        PairMinMax maxPair = findMaxPair(inputArray,0, middle, inputArray.length - 1);
+
+        if(maxPair.getDelta()  < 1) throw new NotIncreasingElements();
+
+        return maxPair;
     }
+
+
 
     private static PairMinMax findMaxPair(int[] inputArray, int leftBorder, int middle, int rightBorder) {
 
@@ -25,7 +30,7 @@ public class MainClass {
 
         if(rightBorder - leftBorder < 2) {
 
-            return new PairMinMax(inputArray[leftBorder],inputArray[rightBorder]);
+            return new PairMinMax(inputArray[leftBorder],leftBorder,inputArray[rightBorder],rightBorder);
         }
 
         return findMaxPair(inputArray, leftBorder, (rightBorder + leftBorder)/2, rightBorder);
@@ -35,7 +40,7 @@ public class MainClass {
 
         if(rightBorder - leftBorder < 2) {
 
-            return new PairMinMax(inputArray[leftBorder],inputArray[rightBorder]);
+            return new PairMinMax(inputArray[leftBorder],leftBorder,inputArray[rightBorder],rightBorder);
         }
 
         return findMaxPair(inputArray, leftBorder, (rightBorder + leftBorder)/2, rightBorder);
@@ -44,17 +49,28 @@ public class MainClass {
     private static PairMinMax findMaxInTheCentralPart(int[] inputArray, int leftBorder, int middle, int rightBorder) {
 
         int pointMax = inputArray[middle];
+        int indexMax = middle;
+
         int pointMin = inputArray[middle];
+        int indexMin = middle;
 
         for(int i = leftBorder; i < middle; i++) {
 
-            if(inputArray[i] < pointMin) pointMin = inputArray[i];
+            if(inputArray[i] < pointMin) {
+
+                pointMin = inputArray[i];
+                indexMin = i;
+            }
         }
         for(int i = middle + 1; i <= rightBorder; i++) {
 
-            if(inputArray[i] > pointMax) pointMax = inputArray[i];
+            if(inputArray[i] > pointMax) {
+
+                pointMax = inputArray[i];
+                indexMax = i;
+            }
         }
 
-        return new PairMinMax(pointMin, pointMax);
+        return new PairMinMax(pointMin,indexMin,pointMax,indexMax);
     }
 }
